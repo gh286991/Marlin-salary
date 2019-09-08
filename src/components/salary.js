@@ -2,20 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Salary extends React.Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+      
+    };
+  }
+
   render() {
-    const { getTrello, trello } = this.props;
+    const { getTrello, data ,isLoading } = this.props;
+    console.log('in commpoent' , data)
 
     return (
       <div>
         <h2>Trello</h2>
         <div>
-          <button type="button" onClick={() => getTrello()}>
-            Get data
-          </button>
           {' '}
           <div>
             {' '}
-            {/* { isLoading ? 'Loading...' : JSON.stringify(data)} */}
+            { isLoading ? 'Loading...' : JSON.stringify(data)}
           </div>
         </div>
       </div>

@@ -8,7 +8,6 @@ import {
 
 const initialState = {
   isLoading: false,
-  data: '尚未載入資料',
 };
 
 
@@ -25,7 +24,7 @@ export default function readFirebase(state = initialState, action) {
       const data = action.payload;
       return {
         ...state,
-        isLoading: false,
+        isLoading: true,
         member: data,
       };
     }

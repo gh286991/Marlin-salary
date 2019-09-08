@@ -6,14 +6,19 @@ import Salary from '../components/salary';
 import { getTrello } from '../actions/trello';
 import { readFirebase } from '../actions/firebase';
 
-// console.log(this.props)
+
 class SalaryContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
     };
   }
+
+  componentDidMount(){
+    const {getTrello} = this.props
+    getTrello()
+  }
+
 
   makedata= () => {
     const { trello } = this.props;
@@ -38,21 +43,22 @@ class SalaryContainer extends Component {
       };
     });
 
-
-    console.log('item ', item);
+    return item
   }
 
   render() {
     const {
-      getTrello,
+      getTrello, trello
     } = this.props;
-
-    // console.log( this.props.trello.list)
-    this.makedata();
-
+    const {
+      isLoading
+    } = trello
+    console.log( isLoading)
+    const data = this.makedata();
+  
     return (
       <div>
-        <Salary getTrello={getTrello} />
+        <Salary getTrello={getTrello} data = {data} isLoading = {isLoading}/>
       </div>
     );
   }

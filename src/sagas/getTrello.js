@@ -7,17 +7,6 @@ import {
 
 } from '../actions/trello';
 
-// export default function* readFirebase(action) {
-//   const { path } = action;
-//   try {
-//     yield put(readFirebaseRequest());
-//     const data = yield call(() => read(path));
-//     yield put(readFirebaseSucces(data));
-//   } catch (error) {
-//     yield put(readFirebasefail());
-//   }
-// }
-
 export default function* getTrello(action) {
   try {
     yield put(getTrelloRequest());
