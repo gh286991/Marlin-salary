@@ -7,7 +7,7 @@ import {
 
 } from '../actions/trello';
 
-export default function* getTrello(action) {
+export default function* getTrello() {
   try {
     yield put(getTrelloRequest());
     const member = yield call(() => getMember());
