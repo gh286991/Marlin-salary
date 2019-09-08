@@ -2,7 +2,6 @@ import {
   GET_TRELLO_REQUEST,
   GET_TRELLO_MEMBER_SUCECESS,
   GET_TRELLO_LIST_SUCCECSS,
-
 } from '../actions/trello';
 
 
