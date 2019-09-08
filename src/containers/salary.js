@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 import Salary from '../components/salary';
 import { getTrello } from '../actions/trello';
-import { readFirebase } from '../actions/firebase';
 
 
 class SalaryContainer extends Component {
@@ -14,9 +13,9 @@ class SalaryContainer extends Component {
     };
   }
 
-  componentDidMount(){
-    const {getTrello} = this.props
-    getTrello()
+  componentDidMount() {
+    const { getTrello } = this.props;
+    getTrello();
   }
 
 
@@ -43,22 +42,21 @@ class SalaryContainer extends Component {
       };
     });
 
-    return item
+    return item;
   }
 
   render() {
     const {
-      getTrello, trello
+      getTrello, trello,
     } = this.props;
     const {
-      isLoading
-    } = trello
-    console.log( isLoading)
+      isLoading,
+    } = trello;
     const data = this.makedata();
-  
+
     return (
       <div>
-        <Salary getTrello={getTrello} data = {data} isLoading = {isLoading}/>
+        <Salary getTrello={getTrello} data={data} isLoading={isLoading} />
       </div>
     );
   }
@@ -67,7 +65,6 @@ class SalaryContainer extends Component {
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     getTrello,
-    readFirebase,
   },
   dispatch,
 );
