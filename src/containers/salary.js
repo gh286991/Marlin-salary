@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 import Salary from '../components/salary';
 import { getTrello } from '../actions/trello';
+import '../css/box.sass';
 
 
 class SalaryContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      data: [],
     };
   }
 
   componentDidMount() {
-    const { getTrello } = this.props;
+    const { getTrello } = this.props; // eslint-disable-line no-shadow
     getTrello();
   }
 
@@ -24,16 +27,16 @@ class SalaryContainer extends Component {
     const data = _.get(trello, 'list', []);
     const member = _.get(trello, 'member', []);
 
-    const item = data.map((value, i) => {
+    const item = data.map((value) => {
       const nameID = value.idMembers[0];
 
-      const name = member.map((value, index) => {
-        const { id } = value;
+      const name = member.map((v) => {
+        const { id } = v;
         if (nameID === id) {
-          return value.fullName;
+          return v.fullName;
         }
         return null;
-      }).filter((value) => value != null);
+      }).filter((names) => names != null);
 
       return {
         name: value.name,
@@ -41,13 +44,12 @@ class SalaryContainer extends Component {
         member: name[0],
       };
     });
-
     return item;
   }
 
   render() {
     const {
-      getTrello, trello,
+      trello,
     } = this.props;
     const {
       isLoading,
@@ -56,11 +58,17 @@ class SalaryContainer extends Component {
 
     return (
       <div>
-        <Salary getTrello={getTrello} data={data} isLoading={isLoading} />
+        <Salary data={data} isLoading={isLoading} />
       </div>
     );
   }
 }
+
+SalaryContainer.propTypes = {
+  getTrello: PropTypes.func.isRequired,
+  trello: PropTypes.object.isRequired,
+};
+
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {

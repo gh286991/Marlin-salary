@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
 import '../css/box.sass';
+import Summary from './summary';
 
 class Salary extends React.Component {
   constructor(props) {
@@ -17,7 +18,6 @@ class Salary extends React.Component {
 
     return (
       <div>
-        <h2>Trello</h2>
         <div>
           <div>
             { isLoading ? 'Loading...'
@@ -35,7 +35,7 @@ class Salary extends React.Component {
                     </thead>
                     <tbody>
                       {data.map((value, i) => (
-                        <tr>
+                        <tr key={value.name}>
                           <td>{i}</td>
                           <td>{value.name}</td>
                           <td>{ value.member }</td>
@@ -44,8 +44,8 @@ class Salary extends React.Component {
                       ))}
                     </tbody>
                   </Table>
+                  <Summary data={data} />
                 </div>
-
               )}
           </div>
         </div>
@@ -56,7 +56,7 @@ class Salary extends React.Component {
 
 Salary.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  data: PropTypes.shape([]).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default Salary;
