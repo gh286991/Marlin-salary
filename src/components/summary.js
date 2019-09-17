@@ -17,7 +17,6 @@ class Summary extends React.Component {
       salary: 70000,
       base: 10000,
       others: 0,
-      shared: {},
     };
   }
 
@@ -44,15 +43,14 @@ class Summary extends React.Component {
   }
 
   salaryChange=(e) => {
-    const value = parseInt(e.target.value);
-
+    const value = parseInt(e.target.value, 10);
     this.setState({
       salary: value,
     });
   }
 
   baseChange=(e) => {
-    const value = parseInt(e.target.value);
+    const value = parseInt(e.target.value, 10);
 
     this.setState({
       base: value,
@@ -60,7 +58,7 @@ class Summary extends React.Component {
   }
 
   othersChange = (e) => {
-    const value = parseInt(e.target.value);
+    const value = parseInt(e.target.value, 10);
 
     this.setState({
       others: value,
@@ -83,17 +81,18 @@ class Summary extends React.Component {
       if (!pointsGot) {
         money = base - others / membersN;
       } else {
-        money = (salary - base * membersN) * pointsGot / totalPoints + base - others / membersN;
+        money = (salary - base * membersN) * (pointsGot / totalPoints) + base - others / membersN;
       }
-
-      moneyShared[member] = parseInt(money);
+      moneyShared[member] = parseInt(money, 10);
     });
 
     return moneyShared;
   }
 
   render() {
-    const { point, counted } = this.state;
+    const {
+      point, counted, salary, base, others,
+    } = this.state;
 
     return (
       <div>
@@ -103,14 +102,12 @@ class Summary extends React.Component {
         </div>
         <form>
           <div className="subtitle">收入支出相關設定</div>
-          <label>
                     本月薪水
-            <input type="number" value={this.state.salary} onChange={this.salaryChange} />
+          <input type="number" value={salary} onChange={this.salaryChange} />
                     固定底薪(每人)
-            <input type="number" value={this.state.base} onChange={this.baseChange} />
+          <input type="number" value={base} onChange={this.baseChange} />
                     雜項支出
-            <input type="number" value={this.state.others} onChange={this.othersChange} />
-          </label>
+          <input type="number" value={others} onChange={this.othersChange} />
         </form>
         <div className="subtitle">每人分到的錢</div>
         <div className="result">{ counted ? JSON.stringify(this.countResult()) : '23232'}</div>
@@ -119,9 +116,9 @@ class Summary extends React.Component {
   }
 }
 
-// Summary.propTypes = {
-//   isLoading: PropTypes.bool.isRequired,
-//   data: PropTypes.arrayOf(PropTypes.object),
-// };
+Summary.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  members: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default Summary;

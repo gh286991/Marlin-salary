@@ -65,7 +65,11 @@ class SalaryContainer extends Component {
 
 SalaryContainer.propTypes = {
   getTrello: PropTypes.func.isRequired,
-  trello: PropTypes.object.isRequired,
+  trello: PropTypes.shape({
+    isLoading: PropTypes.bool,
+    member: PropTypes.array,
+    list: PropTypes.array,
+  }).isRequired,
 };
 
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
-import _ from 'lodash';
 import '../css/box.sass';
 import Summary from './summary';
 
@@ -17,7 +16,6 @@ class Salary extends React.Component {
 
   render() {
     const { data, members, isLoading } = this.props;
-
     return (
       <div>
         <div>
@@ -59,6 +57,7 @@ class Salary extends React.Component {
 Salary.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  members: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Salary;
