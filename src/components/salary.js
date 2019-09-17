@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
+import _ from 'lodash';
 import '../css/box.sass';
 import Summary from './summary';
 
@@ -8,13 +9,14 @@ class Salary extends React.Component {
   constructor(props) {
     super(props);
 
+
     this.state = {
 
     };
   }
 
   render() {
-    const { data, isLoading } = this.props;
+    const { data, members, isLoading } = this.props;
 
     return (
       <div>
@@ -44,7 +46,7 @@ class Salary extends React.Component {
                       ))}
                     </tbody>
                   </Table>
-                  <Summary data={data} />
+                  <Summary data={data} members={members} />
                 </div>
               )}
           </div>

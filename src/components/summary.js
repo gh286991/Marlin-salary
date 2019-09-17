@@ -7,13 +7,17 @@ import '../css/box.sass';
 class Summary extends React.Component {
   constructor(props) {
     super(props);
-    const { data } = this.props;
+    const { data, members } = this.props;
+
     this.state = {
+      counted: false,
       data,
-      point: null,
+      members,
+      point: [],
       salary: 70000,
       base: 10000,
-      others: '',
+      others: 0,
+      shared: {},
     };
   }
 
@@ -35,11 +39,12 @@ class Summary extends React.Component {
 
     this.setState({
       point: member,
+      counted: true,
     });
   }
 
   salaryChange=(e) => {
-    const { value } = e.target;
+    const value = parseInt(e.target.value);
 
     this.setState({
       salary: value,
@@ -47,7 +52,7 @@ class Summary extends React.Component {
   }
 
   baseChange=(e) => {
-    const { value } = e.target;
+    const value = parseInt(e.target.value);
 
     this.setState({
       base: value,
@@ -55,15 +60,41 @@ class Summary extends React.Component {
   }
 
   othersChange = (e) => {
-    const { value } = e.target;
+    const value = parseInt(e.target.value);
 
     this.setState({
       others: value,
     });
   }
 
+  countResult=() => {
+    const {
+      salary, point, base, members, others,
+    } = this.state;
+
+    const membersN = members.length;
+    const moneyShared = {};
+    const totalPoints = Object.values(point).reduce((a, b) => (a + b));
+
+    members.forEach((member) => {
+      const pointsGot = point[member];
+
+      let money;
+      if (!pointsGot) {
+        money = base - others / membersN;
+      } else {
+        money = (salary - base * membersN) * pointsGot / totalPoints + base - others / membersN;
+      }
+
+      moneyShared[member] = parseInt(money);
+    });
+
+    return moneyShared;
+  }
+
   render() {
-    const { point } = this.state;
+    const { point, counted } = this.state;
+
     return (
       <div>
         <div className="bottom">
@@ -82,7 +113,7 @@ class Summary extends React.Component {
           </label>
         </form>
         <div className="subtitle">每人分到的錢</div>
-        <div className="result">{}</div>
+        <div className="result">{ counted ? JSON.stringify(this.countResult()) : '23232'}</div>
       </div>
     );
   }

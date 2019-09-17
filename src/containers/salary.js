@@ -9,13 +9,6 @@ import '../css/box.sass';
 
 
 class SalaryContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-    };
-  }
-
   componentDidMount() {
     const { getTrello } = this.props; // eslint-disable-line no-shadow
     getTrello();
@@ -26,6 +19,8 @@ class SalaryContainer extends Component {
     const { trello } = this.props;
     const data = _.get(trello, 'list', []);
     const member = _.get(trello, 'member', []);
+
+    const members = member.map((name) => name.fullName);
 
     const item = data.map((value) => {
       const nameID = value.idMembers[0];
@@ -44,7 +39,10 @@ class SalaryContainer extends Component {
         member: name[0],
       };
     });
-    return item;
+    return {
+      item,
+      members,
+    };
   }
 
   render() {
@@ -54,11 +52,12 @@ class SalaryContainer extends Component {
     const {
       isLoading,
     } = trello;
-    const data = this.makedata();
+
+    const { item, members } = this.makedata();
 
     return (
       <div>
-        <Salary data={data} isLoading={isLoading} />
+        <Salary data={item} members={members} isLoading={isLoading} />
       </div>
     );
   }
